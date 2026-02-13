@@ -2,7 +2,7 @@
 
 ## 作業目標
 
-測試已經幫你寫好了！你的任務是**實作計算機的程式碼**，讓所有測試通過。
+測試已經幫你寫好了！你的任務是**填寫 `calculator.js` 裡的 3 個 TODO**，讓全部 10 個測試通過。
 
 透過實作，你會動手寫出：
 - 用 **陣列的 push / pop** 來記錄操作歷史
@@ -10,99 +10,80 @@
 
 ---
 
-## 知識點對照（簡報 → 實作）
-
-| 簡報關卡 | 知識點 | 你要實作的部分 |
-|----------|--------|----------------|
-| Push（推入） | 每次操作都 push 進 undoStack | `add()` / `subtract()` 裡的 push |
-| Pop（彈出） | undo 時從 undoStack pop 出來 | `undo()` 裡的 pop |
-| LIFO 順序 | 最後做的操作最先被還原 | `undo()` 的反向執行邏輯 |
-
----
-
-## 資料夾結構
-
-```
-stack-calculator/
-├── README.md              ← 你正在看的這份文件
-├── package.json
-├── calculator.js          ← 📝 你要實作的程式碼（裡面有 TODO）
-└── __tests__/
-    └── calculator.test.js  ← ✅ 測試（已寫好，不用改）
-```
-
-> **注意**：`calculator.test.js` 已經寫好了，你**不需要修改**它。只需要填寫 `calculator.js` 裡面的 TODO。
-
----
-
 ## 快速開始
 
 ```bash
-# 1. 進入作業資料夾
-cd homework/stack-calculator
+# 1. 把作業 repo clone 下來
+git clone <你的作業 repo 網址>
+cd stack-calculator
 
 # 2. 安裝套件
 npm install
 
-# 3. 執行測試（一開始全部會失敗，因為 TODO 還沒實作）
+# 3. 跑測試（一開始會全部失敗，這是正常的！）
 npm test
 ```
 
-一開始跑測試會看到一片紅色 ❌，這是正常的！每實作一個方法，就會有更多測試變綠 ✅。
+一開始跑測試會看到一片紅色，每實作一個方法就會有更多測試變綠。
 
 ---
 
-## 怎麼實作？看 calculator.js 裡的提示
+## 檔案結構
 
-打開 `calculator.js`，每個 TODO 都有提示告訴你該怎麼寫。
-
-### 範例：add 方法
-
-```js
-add(n) {
-  // TODO: 請實作
-},
+```
+stack-calculator/
+├── .github/workflows/test.yml  ← GitHub Actions 自動跑測試
+├── calculator.js               ← 你要寫的（裡面有 TODO）
+├── __tests__/
+│   └── calculator.test.js      ← 測試（已寫好，不用改）
+├── package.json
+└── README.md
 ```
 
-註解裡告訴你要做兩件事：
-1. 把 `value` 加上 `n`
-2. 把操作記錄 push 進 `undoStack`（用 `{ type: 'add', value: n }`）
+> **你只需要修改 `calculator.js`**，其他檔案都不用動。
 
-所以你要寫：
+---
 
-```js
-add(n) {
-  value += n
-  undoStack.push({ type: 'add', value: n })
-},
-```
+## 實作順序
 
-### 推薦實作順序
+1. **先寫 `add(n)` 和 `subtract(n)`** — 跑 `npm test` 看前 5 題變綠
+2. **再寫 `undo()`** — 全部 10 題變綠就完成了！
 
-1. **先寫 `add` 和 `subtract`** — 最簡單，跑測試看前 5 題變綠
-2. **再寫 `undo`** — 重點是「還原上一步」，全部 10 題變綠就完成了！
+打開 `calculator.js`，每個 TODO 上方都有註解提示。
 
 ---
 
 ## 測試清單（10 題）
 
-讓所有測試通過！
+### 基本計算（5 題）
 
-### 基本計算（5 題） → 實作 `add` + `subtract` 就能過
+| # | 測試 | 實作哪個方法 |
+|---|------|------------|
+| 1 | 初始值是 0 | （自動通過） |
+| 2 | add(10) 後值是 10 | `add` |
+| 3 | subtract(3) 後值正確 | `subtract` |
+| 4 | 連續 add 累加 | `add` |
+| 5 | 可以減到負數 | `subtract` |
 
-- [ ] 初始值是 0
-- [ ] add(10) 後值是 10
-- [ ] subtract(3) 後值正確
-- [ ] 連續 add 累加
-- [ ] 可以減到負數
+### Undo 還原（5 題）
 
-### Undo 還原（5 題） → 實作 `undo` 就能過
+| # | 測試 | 實作哪個方法 |
+|---|------|------------|
+| 6 | undo 還原上一步 add | `undo` |
+| 7 | undo 還原上一步 subtract | `undo` |
+| 8 | 連續 undo 依序還原（LIFO） | `undo` |
+| 9 | 空的 undo 不報錯 | `undo` |
+| 10 | undo 後 undoCount 減少 | `undo` |
 
-- [ ] undo 還原上一步 add
-- [ ] undo 還原上一步 subtract
-- [ ] 連續 undo 依序還原（LIFO）
-- [ ] 空的 undo 不報錯
-- [ ] undo 後 undoCount 減少
+---
+
+## GitHub Actions 自動測試
+
+你的 repo 已經設定好 GitHub Actions，每次 push 都會自動跑測試。
+
+到 GitHub repo 頁面 → **Actions** 分頁，就能看到測試結果：
+- 全部通過 = 綠色勾勾
+- 有失敗 = 紅色叉叉（點進去看哪一題沒過）
 
 ---
 
@@ -112,5 +93,13 @@ add(n) {
 
 ```bash
 npm test
-# 目標：10 個測試全綠 ✅
+# 目標：10 個測試全綠
 ```
+
+---
+
+## 繳交方式
+
+1. 把作業 push 到你的 GitHub repo
+2. 確認 GitHub Actions 顯示綠色勾勾
+3. 繳交你的 GitHub repo 網址
