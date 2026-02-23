@@ -33,15 +33,13 @@ export function createCalculator() {
 
     undo() {
       // TODO: 請實作
-      if(undoStack.length > 0) {
-        const result = undoStack.pop()
-        if(result.type === "add") {
-          value -= result.value
-        } else if(result.type === "subtract"){
-         value += result.value
-        }
+      if(undoStack.length === 0) return
+      const result = undoStack.pop()
+      if(result.type === "add") {
+        value -= result.value
+      } else {
+        value += result.value
       }
-
     },
 
     getUndoCount() {
